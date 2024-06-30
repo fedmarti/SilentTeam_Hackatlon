@@ -1,0 +1,34 @@
+install apache
+install php8.1
+install php-fpm
+
+cd /etc/apache2
+a2dissite * --purge -q 
+sudo apt install libapache2-mod-php
+sudo a2enmod php
+sudo a2enmod proxy proxy_fcgi
+sudo systemctl restart apache2
+sudo systemctl enable php8.1-fpm
+sudo systemctl start php8.1-fpm
+
+in .../ports.conf
+Listen [port n]
+
+in /etc/apache2/sites-enabled/name.conf:
+	ServerName example.net
+	ServerAdmin federico@localhost
+	DocumentRoot /var/www/gci
+
+	<FilesMatch "\.php$">
+	  SetHandler "proxy:unix:/var/run/php/php8.1-fpm.sock|fcgi://localhost"
+	</FilesMatch>
+
+in ..../mods-enabled/php8.1.conf
+
+ #<IfModule mod_userdir.c>
+ #   <Directory /home/*/public_html>
+ #       php_admin_flag engine Off
+  #  </Directory>
+#</IfModule>
+	
+in .../

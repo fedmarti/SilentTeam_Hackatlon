@@ -1,0 +1,11 @@
+services:
+  web:
+    image: apache2
+    build: .
+    ports:
+      - "6969:5000"
+      - "6379:6379"
+  redis:
+    image: "redis:alpine"
+    ports:
+      - ":6379"
