@@ -1,6 +1,6 @@
 services:
   web:
-    image: apache2
+    image: ubuntu/apache2
     build: .
     ports:
       - "6969:5000"
